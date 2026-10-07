@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TCP_Object_Stream;
+import TCP.Laptop;
 import java.util.* ; 
 import java.io.*; 
 import java.net.*; 

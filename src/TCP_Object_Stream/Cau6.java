@@ -3,17 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TCP_Object_Stream;
-import TCP_Object_Stream.Product; 
+
 import java.util.*; 
 import java.io.*; 
 import java.net.*; 
-
-public class Cau3 {
+public class Cau6 {
     public static void main(String[] args) {
-        String server = "test"; 
-        int port = 123; 
+        String server = "36.50.135.242"; 
+        int port = 2209; 
         String name = "B23DCCN686"; 
-        String qcode = "123"; 
+        String qcode = "y2UEtsV7";
         try(Socket socket = new Socket(server, port)){
             socket.setSoTimeout(5000);
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); 
@@ -21,16 +20,24 @@ public class Cau3 {
             String request = name + ";" + qcode; 
             out.writeObject(request);
             out.flush();
+            EmployeePerformance employee = (EmployeePerformance) in.readObject(); 
             
-            Product product = (Product) in.readObject(); 
-            String tmp = product.getPrice() + ""; 
-            int ans = 0; 
-            for(char c : tmp.toCharArray()) {
-                if(c == '.') break; 
-                ans += Integer.parseInt(c + ""); 
+            List<Integer> list = employee.getMonthlyScores(); 
+            float tmp = 0; 
+            for(int i = 0; i < list.size(); i++){
+                tmp += (float) list.get(i); 
             }
-            product.setDiscount(ans);
-            out.writeObject(product);
+            tmp = (float) tmp / list.size(); 
+            employee.setAvgScore(tmp);
+            if(tmp >= 90){
+                employee.setRating("Excellent");
+            }else if(tmp >= 75){
+                employee.setRating("Good");
+            }else if(tmp >= 60) {
+                employee.setRating("Average");
+            }
+            else employee.setRating("Poor");
+            out.writeObject(employee); 
             out.flush();
         }catch(Exception e){
             e.printStackTrace();

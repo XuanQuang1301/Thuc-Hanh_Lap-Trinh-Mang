@@ -3,17 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TCP_Object_Stream;
-import TCP_Object_Stream.Product; 
 import java.util.*; 
 import java.io.*; 
 import java.net.*; 
-
-public class Cau3 {
+public class Cau7 {
     public static void main(String[] args) {
-        String server = "test"; 
-        int port = 123; 
+        String server = "36.50.135.242"; 
+        int port = 2209; 
         String name = "B23DCCN686"; 
-        String qcode = "123"; 
+        String qcode = "y2UEtsV7";
         try(Socket socket = new Socket(server, port)){
             socket.setSoTimeout(5000);
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); 
@@ -21,16 +19,14 @@ public class Cau3 {
             String request = name + ";" + qcode; 
             out.writeObject(request);
             out.flush();
-            
-            Product product = (Product) in.readObject(); 
-            String tmp = product.getPrice() + ""; 
-            int ans = 0; 
-            for(char c : tmp.toCharArray()) {
-                if(c == '.') break; 
-                ans += Integer.parseInt(c + ""); 
+            BankAccount bank = (BankAccount) in.readObject(); 
+            double tmp = 0; 
+            List<Double> list = bank.getTransactions(); 
+            for(int i = 0; i < list.size(); i++){
+                tmp += list.get(i); 
             }
-            product.setDiscount(ans);
-            out.writeObject(product);
+            bank.setBalanceSummary("Total Transactions: " + tmp);
+            out.writeObject(bank);
             out.flush();
         }catch(Exception e){
             e.printStackTrace();

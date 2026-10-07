@@ -3,17 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TCP_Object_Stream;
-import TCP_Object_Stream.Product; 
+
 import java.util.*; 
 import java.io.*; 
 import java.net.*; 
 
-public class Cau3 {
+public class Cau5 {
+    private static String chu(String tmp){
+        String [] list = tmp.trim().toLowerCase().split("\\s+"); 
+        String ans = ""; 
+        for(int i = 0; i < list.length; i++){
+            ans += Character.toUpperCase(list[i].charAt(0)) + list[i].substring(1) + " "; 
+        }
+        return ans; 
+    }
     public static void main(String[] args) {
-        String server = "test"; 
-        int port = 123; 
+        String server = "36.50.135.242"; 
+        int port = 2209; 
         String name = "B23DCCN686"; 
-        String qcode = "123"; 
+        String qcode = "GZaw7mJT";
         try(Socket socket = new Socket(server, port)){
             socket.setSoTimeout(5000);
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); 
@@ -21,19 +29,15 @@ public class Cau3 {
             String request = name + ";" + qcode; 
             out.writeObject(request);
             out.flush();
-            
-            Product product = (Product) in.readObject(); 
-            String tmp = product.getPrice() + ""; 
-            int ans = 0; 
-            for(char c : tmp.toCharArray()) {
-                if(c == '.') break; 
-                ans += Integer.parseInt(c + ""); 
-            }
-            product.setDiscount(ans);
-            out.writeObject(product);
+            Address address = (Address) in.readObject(); 
+            address.setAddressLine(chu(address.getAddressLine()));
+            String tmp = address.getPostalCode(); 
+            String result = tmp.substring(0, 3) + "-" + tmp.substring(3); 
+            address.setPostalCode(result);
+            out.writeObject(address);
             out.flush();
         }catch(Exception e){
-            e.printStackTrace();
+            e.printStackTrace();; 
         }
     }
 }
