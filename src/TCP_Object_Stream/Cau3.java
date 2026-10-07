@@ -3,17 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TCP_Object_Stream;
- 
+
 import java.util.*; 
 import java.io.*; 
 import java.net.*; 
 
-public class Cau1 {
+public class Cau3 {
     public static void main(String[] args) {
         String server = "test"; 
         int port = 123; 
         String name = "B23DCCN686"; 
-        String qcode = "Cau1"; 
+        String qcode = "123"; 
         try(Socket socket = new Socket(server, port)){
             socket.setSoTimeout(5000);
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); 
@@ -21,21 +21,16 @@ public class Cau1 {
             String request = name + ";" + qcode; 
             out.writeObject(request);
             out.flush();
-            Student student = (Student) in.readObject();  
-            float tmp = student.getGpa();
-            if(tmp > 3.7){
-                student.setGpaLetter("A");
+            
+            Product product = (Product) in.readObject(); 
+            String tmp = product.getPrice() + ""; 
+            int ans = 0; 
+            for(char c : tmp.toCharArray()) {
+                if(c == '.') break; 
+                ans += Integer.parseInt(c + ""); 
             }
-            else if(tmp > 3.0){
-                student.setGpaLetter("B");
-            }
-            else if(tmp > 2.0){
-                student.setGpaLetter("C");
-            }
-            else if (tmp > 1.0) {
-                student.setGpaLetter("D");
-            }else student.setGpaLetter("F");
-            out.writeObject(student);
+            product.setDiscount(ans);
+            out.writeObject(product);
             out.flush();
         }catch(Exception e){
             e.printStackTrace();

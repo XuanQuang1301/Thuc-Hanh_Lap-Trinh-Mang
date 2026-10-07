@@ -3,17 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TCP_Object_Stream;
- 
-import java.util.*; 
+import java.util.* ; 
 import java.io.*; 
 import java.net.*; 
 
-public class Cau1 {
+public class Cau2 {
     public static void main(String[] args) {
-        String server = "test"; 
-        int port = 123; 
+        String server = "36.50.135.242"; 
+        int port = 2209; 
         String name = "B23DCCN686"; 
-        String qcode = "Cau1"; 
+        String qcode = "y2UEtsV7";
         try(Socket socket = new Socket(server, port)){
             socket.setSoTimeout(5000);
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); 
@@ -21,21 +20,19 @@ public class Cau1 {
             String request = name + ";" + qcode; 
             out.writeObject(request);
             out.flush();
-            Student student = (Student) in.readObject();  
-            float tmp = student.getGpa();
-            if(tmp > 3.7){
-                student.setGpaLetter("A");
+            Laptop laptop = (Laptop) in.readObject();
+            
+            String tmp = laptop.getName().trim(); 
+            String list[] = tmp.split("\\s+"); 
+            if(list.length > 1){
+                String tmp1 = list[list.length - 1]; 
+                list[list.length - 1] = list[0]; 
+                list[0] = tmp1; 
+                laptop.setName(String.join(" ", list));
             }
-            else if(tmp > 3.0){
-                student.setGpaLetter("B");
-            }
-            else if(tmp > 2.0){
-                student.setGpaLetter("C");
-            }
-            else if (tmp > 1.0) {
-                student.setGpaLetter("D");
-            }else student.setGpaLetter("F");
-            out.writeObject(student);
+            String ans = new StringBuilder(laptop.getQuantity() + "").reverse().toString();  
+            laptop.setQuantity(Integer.parseInt(ans));
+            out.writeObject(laptop);
             out.flush();
         }catch(Exception e){
             e.printStackTrace();
