@@ -18,16 +18,17 @@ public class yIm9OzCT {
             socket.setSoTimeout(5000);
             DataInputStream in = new DataInputStream(socket.getInputStream()); 
             DataOutputStream out = new DataOutputStream(socket.getOutputStream()); 
-            
-            String request = name + ";" + qcode; 
-            out.writeUTF(request);
+            String rq = name + ";" + qcode; 
+            out.writeUTF(rq);
             out.flush();
+            
             int a = in.readInt(); 
             int b = in.readInt(); 
             int sum = a + b; 
             int tich = a * b; 
             out.writeInt(sum);
-            out.writeInt(tich); 
+            out.flush();
+            out.writeInt(tich);
             out.flush();
         }catch(Exception e){
             e.printStackTrace();

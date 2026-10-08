@@ -17,31 +17,28 @@ public class bs6jkf1i {
             socket.setSoTimeout(5000);
             DataInputStream in = new DataInputStream(socket.getInputStream()); 
             DataOutputStream out = new DataOutputStream(socket.getOutputStream()); 
-            String request = name + ";" + qcode; 
-            out.writeUTF(request);
+            String rq = name + ";" + qcode; 
+            out.writeUTF(rq);
             out.flush();
-            String encode = in.readUTF(); 
-            int s = in.readInt(); 
-            int shift = (s % 26); 
-            StringBuilder decode = new StringBuilder(); 
-            for(char c : encode.toCharArray()){
+            String response = in.readUTF(); 
+            int n = in.readInt(); 
+            n = n % 26; 
+            StringBuilder ans = new StringBuilder(); 
+            for(char c: response.toCharArray()){
                 if(c >= 'a' && c <= 'z'){
-                    char d = (char)('a' + (c - 'a' - shift + 26) % 26);
-                    decode.append(d); 
+                    char d = (char) ('a' + (c - 'a' - n + 26) % 26);
+                    ans.append(d); 
                 }
-                else if(c >= 'A' && c <= 'Z'){
-                    char d = (char)('A' + (c - 'A' - shift + 26) % 26);
-                    decode.append(d);  
-                }else{
-                    decode.append(c); 
-                }
- 
+                else if(c >= 'A' && c <='Z'){
+                    char d = (char) ('A' + (c - 'A' - n + 26) % 26);
+                    ans.append(d);
+                } else ans.append(c); 
             }
-            String result = decode.toString(); 
-            out.writeUTF(result);
+            String tmp = ans.toString(); 
+            out.writeUTF(tmp);
             out.flush();
         }catch(Exception e){
-            
+            e.printStackTrace();
         }
     }
 }

@@ -19,31 +19,26 @@ public class pruou3s2 {
             String rq = name + ";" + qcode; 
             out.write(rq.getBytes());
             out.flush();
-            
             byte [] buffer = new byte[4096]; 
-            int byteRead = in.read(buffer); 
-            if(byteRead <= 0 ) return; 
-            String response = new String(buffer, 0, byteRead).trim(); 
-            String list[] = response.split(","); 
-            int nums[] = new int[list.length]; 
-            int num_max = Integer.MIN_VALUE; 
+            int len = in.read(buffer); 
+            String response = new String(buffer, 0, len).trim(); 
+            String [] list  = response.split(","); 
+            int num[] = new int[list.length]; 
+            int max1 = Integer.MIN_VALUE; 
             for(int i = 0; i < list.length; i++){
-                nums[i] = Integer.parseInt(list[i]); 
-                if(nums[i] > num_max){
-                    num_max = nums[i]; 
-                }
+                num[i] = Integer.parseInt(list[i]); 
+                max1 = Math.max(max1, num[i]); 
             }
             int max2 = Integer.MIN_VALUE; 
             int idx = -1; 
-            
-            for(int i = 0; i < nums.length; i++){
-                if(nums[i] < num_max && nums[i] > max2){
-                    max2 = nums[i]; 
+            for(int i = 0; i < list.length; i++){
+                if(num[i]> max2 && num[i] < max1){
+                    max2 = num[i]; 
                     idx = i; 
                 }
             }
-            String result = max2 + "," + idx; 
-            out.write(result.getBytes());
+            String ans = max2 + "," + idx; 
+            out.write(ans.getBytes());
             out.flush();
         }catch(Exception e){
             e.printStackTrace();
