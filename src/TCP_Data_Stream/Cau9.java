@@ -36,7 +36,7 @@ public class Cau9 {
             int idx = -1; 
             for(int i = 0; i < num.length; i++){
                 for(int j = 0; j < i; j++){
-                    if(num[j] < num[i] && dp[i] < dp[j] + 1){
+                    if(num[j] <  num[i] && dp[i] < dp[j] + 1){
                         dp[i] = dp[j] + 1; 
                         trace[i] = j; 
                     }

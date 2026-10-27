@@ -15,7 +15,7 @@ public class Cau5 {
         for(int i = 0; i < list.length; i++){
             ans += Character.toUpperCase(list[i].charAt(0)) + list[i].substring(1) + " "; 
         }
-        return ans; 
+        return ans.trim(); 
     }
     public static void main(String[] args) {
         String server = "36.50.135.242"; 

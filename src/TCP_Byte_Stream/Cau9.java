@@ -15,13 +15,9 @@ public class Cau9 {
 
             InputStream in = socket.getInputStream();
             OutputStream out = socket.getOutputStream();
-
-            // a. Gửi mã sinh viên và mã câu hỏi
             String request = name + ";" + qcode;
             out.write(request.getBytes());
             out.flush();
-
-            // b. Nhận chuỗi số nguyên từ server
             byte[] buffer = new byte[4096];
             int byteRead = in.read(buffer);
             if (byteRead <= 0) return;

@@ -26,6 +26,7 @@ public class Cau7 {
 
             // c. Đổi sang chuỗi nhị phân
             String binaryString = Integer.toBinaryString(n);
+
             // Gửi chuỗi kết quả lên server
             out.writeUTF(binaryString);
             out.flush();

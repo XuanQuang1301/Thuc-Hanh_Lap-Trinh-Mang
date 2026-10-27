@@ -28,7 +28,25 @@ public class Cau5 {
             byte [] buffer = new byte[4096]; 
             int byteRead = in.read(buffer); 
             String response = new String(buffer, 0, byteRead).trim();
-            
+            String list[] = response.split(","); 
+            int num[]= new int[list.length]; 
+            for(int i = 0; i < list.length; i++){
+                num[i] = Integer.parseInt(list[i]); 
+                
+            }
+            Arrays.sort(num);
+            int ans = Integer.MAX_VALUE; 
+            int x = -1; int y = -1; 
+            for(int i = 1; i < list.length; i++){
+                if(num[i] - num[i - 1] < ans){
+                    ans = num[i] - num[i - 1]; 
+                    x = num[i]; 
+                    y = num[i - 1]; 
+                }
+            }
+            String result = ans + "," + y + "," + x; 
+            out.write(result.getBytes());
+            out.flush();
             
         }catch(Exception e){
             e.printStackTrace();
