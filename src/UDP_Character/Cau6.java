@@ -28,7 +28,7 @@ public class Cau6 {
         for (char c : data.toCharArray()) {
             count[c]++;
         }
-
+        
         // Ghép chuỗi theo thứ tự xuất hiện ban đầu
         StringBuilder ans = new StringBuilder();
         for (char c : data.toCharArray()) {
